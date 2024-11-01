@@ -1,0 +1,17 @@
+﻿[*.cs]
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.OrderingRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.OrderingRules.severity = none
+csharp_style_expression_bodied_methods=true:silent
+csharp_style_expression_bodied_operators=true:silent
+csharp_style_expression_bodied_local_functions=true:silent
+csharp_using_directive_placement=outside_namespace:error
+dotnet_diagnostic.SA1633.severity=silent
+dotnet_diagnostic.SA1124.severity=silent
+dotnet_diagnostic.SA1309.severity=silent
+
+[*.{cs,vb}]
+dotnet_style_qualification_for_field=true:silent
+dotnet_style_qualification_for_property=true:silent
+dotnet_style_qualification_for_method=true:silent
+dotnet_style_qualification_for_event=true:silent

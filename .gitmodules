@@ -1,0 +1,3 @@
+[submodule "ViCommon.Shared"]
+	path = ViCommon.Shared
+	url = https://vi-sit.visualstudio.com/DefaultCollection/ViCommon/_git/ViCommon.Shared
