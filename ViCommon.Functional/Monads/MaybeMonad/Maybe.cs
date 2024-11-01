@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using ViCommon.Functional.Extensions;
 
 #pragma warning disable SA1129 // Do not use default value type constructor
@@ -38,6 +39,15 @@ namespace ViCommon.Functional.Monads.MaybeMonad
         }
 
         /// <summary>
+        /// Create maybe with some value async.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the value.</typeparam>
+        /// <param name="someValueTask">The value.</param>
+        /// <returns>A new maybe.</returns>
+        public static Task<Maybe<TValue>> SomeAsync<TValue>(TValue someValueTask) =>
+            Task.FromResult(Some(someValueTask));
+
+        /// <summary>
         /// Create a maybe which is none.
         /// </summary>
         /// <typeparam name="TValue">The inner type of the maybe.</typeparam>
@@ -57,7 +67,7 @@ namespace ViCommon.Functional.Monads.MaybeMonad
         /// </summary>
         /// <returns>A new MaybeNone.</returns>
         public static NoneValue None() =>
-            new NoneValue();
+            new();
 
         /// <summary>
         /// Convert a nullable value to maybe.
@@ -69,6 +79,14 @@ namespace ViCommon.Functional.Monads.MaybeMonad
             nullableValue is null
                 ? Maybe<TValue>.None()
                 : Maybe<TValue>.Some(nullableValue);
+
+        /// <summary>
+        /// Create a maybe which is none.
+        /// </summary>
+        /// <typeparam name="TValue">The inner type of the maybe.</typeparam>
+        /// <returns>A new maybe.</returns>
+        public static Task<Maybe<TValue>> NoneAsync<TValue>() =>
+            Task.FromResult(None<TValue>());
 
         /// <summary>
         /// Convert a nullable value to maybe.

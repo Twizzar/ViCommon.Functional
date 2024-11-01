@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
+
+using ViCommon.Functional.Extensions;
+
 using static ViCommon.Functional.FunctionalCommon;
 
 namespace ViCommon.Functional.Monads.ResultMonad
@@ -50,6 +54,37 @@ namespace ViCommon.Functional.Monads.ResultMonad
             Result<TSuccess, TFailure>.Success(value);
 
         /// <summary>
+        /// Create a success result without a success value.
+        /// </summary>
+        /// <typeparam name="TFailure">The failure type.</typeparam>
+        /// <returns>A new success monad.</returns>
+        public static Task<IResult<Unit, TFailure>> SuccessAsync<TFailure>()
+            where TFailure : Failure =>
+            Task.FromResult(Success<Unit, TFailure>(Unit.New));
+
+        /// <summary>
+        /// Create a success result.
+        /// </summary>
+        /// <typeparam name="TSuccess">The success type.</typeparam>
+        /// <typeparam name="TFailure">The failure type.</typeparam>
+        /// <param name="valueTask">The success value task.</param>
+        /// <returns>A new success monad.</returns>
+        public static Task<IResult<TSuccess, TFailure>> SuccessAsync<TSuccess, TFailure>(Task<TSuccess> valueTask)
+            where TFailure : Failure =>
+            valueTask.Map(Success<TSuccess, TFailure>);
+
+        /// <summary>
+        /// Create a success result.
+        /// </summary>
+        /// <typeparam name="TSuccess">The success type.</typeparam>
+        /// <typeparam name="TFailure">The failure type.</typeparam>
+        /// <param name="value">The success value.</param>
+        /// <returns>A new success monad.</returns>
+        public static Task<IResult<TSuccess, TFailure>> SuccessAsync<TSuccess, TFailure>(TSuccess value)
+            where TFailure : Failure =>
+            Task.FromResult(Success<TSuccess, TFailure>(value));
+
+        /// <summary>
         /// Create a success result.
         /// </summary>
         /// <typeparam name="TSuccess">The success type.</typeparam>
@@ -79,6 +114,28 @@ namespace ViCommon.Functional.Monads.ResultMonad
             TFailure failure)
             where TFailure : Failure =>
             Result<TSuccess, TFailure>.Failure(failure);
+
+        /// <summary>
+        /// Create a failure result.
+        /// </summary>
+        /// <typeparam name="TSuccess">The success type.</typeparam>
+        /// <typeparam name="TFailure">The failure type.</typeparam>
+        /// <param name="failure">The failure value.</param>
+        /// <returns>A new success monad.</returns>
+        public static Task<IResult<TSuccess, TFailure>> FailureAsync<TSuccess, TFailure>(TFailure failure)
+            where TFailure : Failure =>
+            Task.FromResult(Failure<TSuccess, TFailure>(failure));
+
+        /// <summary>
+        /// Create a failure result.
+        /// </summary>
+        /// <typeparam name="TSuccess">The success type.</typeparam>
+        /// <typeparam name="TFailure">The failure type.</typeparam>
+        /// <param name="failure">The failure value.</param>
+        /// <returns>A new success monad.</returns>
+        public static Task<IResult<TSuccess, TFailure>> FailureAsync<TSuccess, TFailure>(Task<TFailure> failure)
+            where TFailure : Failure =>
+            failure.Map(Failure<TSuccess, TFailure>);
 
         /// <summary>
         /// Converts a predicate to a Result.
