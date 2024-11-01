@@ -65,7 +65,7 @@ namespace ViCommon.Functional.Monads.ResultMonad
                 null => throw new ArgumentNullException(nameof(failure)),
                 AggregateFailure => throw new ArgumentException(
                     $"Use {nameof(this.Combine)} to add a aggregate failure to an aggregate failure."),
-                _ => new AggregateFailure(this.Failures.Append(failure))
+                _ => new AggregateFailure(this.Failures.Append(failure)),
             };
 
         private static string ToString(IEnumerable<Failure> failures) =>
